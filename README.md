@@ -16,4 +16,4 @@ A React-based inventory management application that allows users to track, add, 
 - CSS
 
 ## Status
-Work in progress (Capstone Project)
+Complete

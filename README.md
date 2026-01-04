@@ -8,7 +8,8 @@ This project is part of a Front-End Capstone demonstrating practical application
 
 ## 🚀 Live Demo
 
-https://smart-warehouse-tracker.vercel.app
+ Local:   http://localhost:5173/
+
 
 ---
 

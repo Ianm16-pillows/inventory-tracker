@@ -1,18 +1,13 @@
-import InventoryItem from "./InventoryItem";
+import InventoryItem from "./InventoryItem"
 
-function InventoryList({ items, setItems }) {
+function InventoryList({ items }) {
   return (
-    <div>
-      {items.map((item) => (
-        <InventoryItem
-          key={item.id}
-          item={item}
-          items={items}
-          setItems={setItems}
-        />
+    <div className="mt-4">
+      {items.map(item => (
+        <InventoryItem key={item.id} item={item} />
       ))}
     </div>
-  );
+  )
 }
 
-export default InventoryList;
+export default InventoryList

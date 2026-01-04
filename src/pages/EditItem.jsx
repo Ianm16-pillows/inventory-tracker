@@ -1,59 +1,58 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function EditItem() {
-  const navigate = useNavigate();
+export default function EditItem() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    quantity: "",
-    expiryDate: "",
+  const [item, setItem] = useState({
+    name: "Sulphuric Acid",
+    quantity: 5,
+    category: "Chemical",
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setItem({ ...item, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Item ${id} updated (mock)`);
-    navigate("/inventory");
+    console.log("Updated item:", item);
+    navigate("/");
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-4 shadow rounded">
-      <h2 className="text-xl font-bold mb-4">Edit Item</h2>
+    <div style={{ padding: 20 }}>
+      <h2>Edit Item (ID: {id})</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit}>
         <input
           name="name"
-          placeholder="Item Name"
+          value={item.name}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          placeholder="Item name"
         />
+        <br /><br />
 
         <input
           name="quantity"
           type="number"
-          placeholder="Quantity"
+          value={item.quantity}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          placeholder="Quantity"
         />
+        <br /><br />
 
         <input
-          name="expiryDate"
-          type="date"
+          name="category"
+          value={item.category}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          placeholder="Category"
         />
+        <br /><br />
 
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">
-          Save Changes
-        </button>
+        <button type="submit">Save Changes</button>
       </form>
     </div>
   );
 }
-
-export default EditItem;

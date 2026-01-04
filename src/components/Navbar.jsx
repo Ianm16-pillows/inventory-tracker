@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom"
+// src/components/Navbar.jsx
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="bg-slate-900 text-white p-4 flex gap-6">
-      <Link to="/">Dashboard</Link>
+    <nav className="bg-blue-500 text-white p-4 flex space-x-4">
       <Link to="/inventory">Inventory</Link>
       <Link to="/add">Add Item</Link>
       <Link to="/alerts">Alerts</Link>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
+

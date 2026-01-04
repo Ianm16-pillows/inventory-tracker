@@ -1,12 +1,10 @@
-import InventoryList from "../components/InventoryList";
-
-function Dashboard({ items, setItems }) {
+function Dashboard() {
   return (
-    <div className="page">
-      <h2>Inventory Dashboard</h2>
-      <InventoryList items={items} setItems={setItems} />
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <p>Welcome to the Smart Warehouse Inventory Tracker</p>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

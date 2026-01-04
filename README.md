@@ -1,19 +1,36 @@
-# Smart Inventory Tracker
+# Smart Warehouse Inventory Tracker
 
-A React-based inventory management application that allows users to track, add, edit, and delete stock items through a clean dashboard interface.
+A React-based inventory management system designed for laboratory and warehouse environments, with a focus on Rapid Test company operations.
 
-## Features
-- View inventory items
-- Add new items
-- Edit existing items
-- Delete items
-- Low-stock status indicators
-- LocalStorage persistence
+This project was built as part of a Front-End Capstone to demonstrate practical application of React, state management, routing, and modern UI styling.
 
-## Tech Stack
-- React
-- React Router
-- CSS
+---
 
-## Status
-Complete
+## 🚀 Live Demo
+👉 (Add deployed Vercel/Netlify link here)
+
+---
+
+## 📌 Features
+
+- Add, view, edit, and delete inventory items
+- Track item categories, quantities, and expiry dates
+- Search inventory items by name
+- View alerts for items expiring within 30 days
+- Persistent data storage using LocalStorage
+- Responsive UI built with Tailwind CSS
+
+---
+
+## 🧱 Tech Stack
+
+- React (Vite)
+- React Router DOM
+- Tailwind CSS
+- JavaScript (ES6)
+- LocalStorage (Web Storage API)
+
+---
+
+## 📂 Project Structure
+

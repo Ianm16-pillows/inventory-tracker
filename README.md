@@ -6,11 +6,6 @@ This project was built as part of a Front-End Capstone to demonstrate practical 
 
 ---
 
-## 🚀 Live Demo
-👉 (Add deployed Vercel/Netlify link here)
-
----
-
 ## 📌 Features
 
 - Add, view, edit, and delete inventory items

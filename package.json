@@ -1,13 +1,12 @@
 {
-  "name": "smart-warehouse-tracker",
+  "name": "inventory-tracker",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext .js,.jsx"
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -17,9 +16,9 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.15",
-    "eslint": "^8.48.0",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.0"
   }
 }
+

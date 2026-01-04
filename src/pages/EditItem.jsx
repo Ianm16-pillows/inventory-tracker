@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function EditItem({ item, onUpdate }) {
-  const [formData, setFormData] = useState({ ...item });
+function EditItem() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    quantity: "",
+    expiryDate: "",
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -9,37 +17,39 @@ function EditItem({ item, onUpdate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdate(formData);
+    alert(`Item ${id} updated (mock)`);
+    navigate("/inventory");
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="max-w-md mx-auto bg-white p-4 shadow rounded">
       <h2 className="text-xl font-bold mb-4">Edit Item</h2>
+
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           name="name"
-          value={formData.name}
-          onChange={handleChange}
           placeholder="Item Name"
+          onChange={handleChange}
           className="w-full p-2 border rounded"
         />
+
         <input
           name="quantity"
-          value={formData.quantity}
-          onChange={handleChange}
           type="number"
           placeholder="Quantity"
+          onChange={handleChange}
           className="w-full p-2 border rounded"
         />
+
         <input
           name="expiryDate"
-          value={formData.expiryDate}
-          onChange={handleChange}
           type="date"
+          onChange={handleChange}
           className="w-full p-2 border rounded"
         />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Update
+
+        <button className="bg-blue-600 text-white px-4 py-2 rounded">
+          Save Changes
         </button>
       </form>
     </div>

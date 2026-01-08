@@ -7,17 +7,17 @@ export default function EditItem() {
 
   const [item, setItem] = useState({
     name: "Sulphuric Acid",
-    quantity: 10,
+    quantity: 5,
     category: "Chemical",
   });
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     setItem({ ...item, [e.target.name]: e.target.value });
-  };
+  }
 
-  const handleSave = () => {
+  function handleSave() {
     navigate("/");
-  };
+  }
 
   return (
     <div style={{ padding: "20px" }}>

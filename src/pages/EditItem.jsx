@@ -5,106 +5,69 @@ function EditItem({ inventory, updateItem }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Find the item to edit
-  const itemToEdit = inventory.find((item) => item.id === id);
+  const itemToEdit = inventory.find(item => item.id === id);
 
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     category: "",
     quantity: "",
     supplier: "",
     expiry: "",
-    notes: "",
+    notes: ""
   });
-
-  const [errors, setErrors] = useState({});
-
-  const categories = [
-    "Cypress Diagnostics",
-    "Qiagen Diagnostics",
-    "Abbort",
-    "Haemocue",
-    "Lab Consumables",
-    "Chemicals & Reagents",
-  ];
 
   useEffect(() => {
     if (itemToEdit) {
-      setForm({
-        name: itemToEdit.name || "",
-        category: itemToEdit.category || "",
-        quantity: itemToEdit.quantity || "",
-        supplier: itemToEdit.supplier || "",
-        expiry: itemToEdit.expiry || "",
-        notes: itemToEdit.notes || "",
+      setFormData({
+        name: itemToEdit.name,
+        category: itemToEdit.category,
+        quantity: itemToEdit.quantity,
+        supplier: itemToEdit.supplier,
+        expiry: itemToEdit.expiry,
+        notes: itemToEdit.notes
       });
     }
   }, [itemToEdit]);
 
-  const validate = () => {
-    const newErrors = {};
-    if (!form.name) newErrors.name = "Name is required";
-    if (!form.category) newErrors.category = "Category is required";
-    if (!form.quantity || isNaN(form.quantity)) newErrors.quantity = "Quantity must be a number";
-    if (form.expiry && new Date(form.expiry) < new Date()) newErrors.expiry = "Expiry must be in the future";
-    return newErrors;
-  };
-
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    updateItem(id, form); // Update item in parent state
-    navigate("/"); // Go back to inventory list
+    updateItem(id, formData);
+    navigate("/");
   };
 
-  if (!itemToEdit) {
-    return (
-      <div className="text-center mt-20 text-red-600 font-bold">
-        Item not found.
-      </div>
-    );
-  }
+  if (!itemToEdit) return <div className="text-red-600">Item not found</div>;
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-green-700">Edit Item</h2>
+    <div className="max-w-lg mx-auto bg-white p-6 rounded shadow mt-6">
+      <h2 className="text-xl font-bold mb-4">Edit Item</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-
         <div>
           <label className="block font-semibold">Name</label>
           <input
             type="text"
             name="name"
-            value={form.name}
+            value={formData.name}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 w-full rounded"
+            required
           />
-          {errors.name && <p className="text-red-600 text-sm">{errors.name}</p>}
         </div>
 
         <div>
           <label className="block font-semibold">Category</label>
-          <select
+          <input
+            type="text"
             name="category"
-            value={form.category}
+            value={formData.category}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
-          >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          {errors.category && <p className="text-red-600 text-sm">{errors.category}</p>}
+            className="border p-2 w-full rounded"
+            required
+          />
         </div>
 
         <div>
@@ -112,11 +75,11 @@ function EditItem({ inventory, updateItem }) {
           <input
             type="number"
             name="quantity"
-            value={form.quantity}
+            value={formData.quantity}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 w-full rounded"
+            required
           />
-          {errors.quantity && <p className="text-red-600 text-sm">{errors.quantity}</p>}
         </div>
 
         <div>
@@ -124,39 +87,38 @@ function EditItem({ inventory, updateItem }) {
           <input
             type="text"
             name="supplier"
-            value={form.supplier}
+            value={formData.supplier}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 w-full rounded"
           />
         </div>
 
         <div>
-          <label className="block font-semibold">Expiry Date</label>
+          <label className="block font-semibold">Expiry</label>
           <input
             type="date"
             name="expiry"
-            value={form.expiry}
+            value={formData.expiry}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 w-full rounded"
           />
-          {errors.expiry && <p className="text-red-600 text-sm">{errors.expiry}</p>}
         </div>
 
         <div>
           <label className="block font-semibold">Notes</label>
           <textarea
             name="notes"
-            value={form.notes}
+            value={formData.notes}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 w-full rounded"
           ></textarea>
         </div>
 
         <button
           type="submit"
-          className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Update Item
+          Save Changes
         </button>
       </form>
     </div>

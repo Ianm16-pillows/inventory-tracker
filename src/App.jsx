@@ -1,35 +1,33 @@
 import React, { useState } from "react";
 import Inventory from "./pages/Inventory";
 import AddItem from "./pages/AddItem";
-import EditItem from "./pages/EditItem"; // case-sensitive
+import EditItem from "./pages/EditItem";
 import Alerts from "./pages/Alerts";
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
+  const [editingItemId, setEditingItemId] = useState(null);
 
-  const handleAdd = (item) => setItems([...items, item]);
-  const handleUpdate = (updated) =>
-    setItems(items.map((i) => (i.id === updated.id ? updated : i)));
-  const handleEdit = (item) => setEditingItem(item);
-  const handleCancel = () => setEditingItem(null);
+  const handleEdit = (id) => {
+    setEditingItemId(id);
+  };
+
+  const handleSave = (updatedItem) => {
+    // Update inventory logic here (or just alert for demo)
+    alert(`Saved: ${updatedItem.name}`);
+    setEditingItemId(null);
+  };
 
   return (
-    <div className="min-h-screen p-4 bg-lightBlue">
-      <h1 className="text-3xl font-bold text-center text-primaryBlue mb-4">
-        Smart Inventory Tracker
-      </h1>
-
-      {!editingItem ? (
-        <>
-          <AddItem onAdd={handleAdd} />
-          <Inventory items={items} onEdit={handleEdit} />
-        </>
+    <div className="min-h-screen bg-blue-50 p-4">
+      {editingItemId ? (
+        <EditItem itemId={editingItemId} onSave={handleSave} />
       ) : (
-        <EditItem item={editingItem} onSave={handleUpdate} onCancel={handleCancel} />
+        <>
+          <AddItem />
+          <Inventory onEdit={handleEdit} />
+          <Alerts />
+        </>
       )}
-
-      <Alerts items={items} />
     </div>
   );
 }

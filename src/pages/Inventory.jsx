@@ -1,39 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { inventory } from "../data/inventoryData";
 
-function Inventory({ inventory }) {
+const Inventory = ({ onEdit }) => {
   return (
-    <div>
-      <div className="flex justify-between mb-4">
-        <h2 className="text-xl font-bold">Inventory List</h2>
-        <Link to="/add" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Add Item
-        </Link>
-      </div>
-
-      <table className="min-w-full bg-white rounded shadow overflow-hidden">
-        <thead className="bg-blue-200">
+    <div className="p-4 bg-white shadow-md rounded-md mt-4">
+      <h2 className="text-xl font-bold mb-4">Inventory</h2>
+      <table className="w-full border border-gray-200">
+        <thead className="bg-blue-100">
           <tr>
-            <th className="py-2 px-4 text-left">Name</th>
-            <th className="py-2 px-4 text-left">Category</th>
-            <th className="py-2 px-4 text-left">Quantity</th>
-            <th className="py-2 px-4 text-left">Supplier</th>
-            <th className="py-2 px-4 text-left">Expiry</th>
-            <th className="py-2 px-4 text-left">Actions</th>
+            <th className="border px-2 py-1">ID</th>
+            <th className="border px-2 py-1">Name</th>
+            <th className="border px-2 py-1">Category</th>
+            <th className="border px-2 py-1">Supplier</th>
+            <th className="border px-2 py-1">Quantity</th>
+            <th className="border px-2 py-1">Expiry</th>
+            <th className="border px-2 py-1">Action</th>
           </tr>
         </thead>
         <tbody>
           {inventory.map((item) => (
-            <tr key={item.id} className="border-b hover:bg-blue-50">
-              <td className="py-2 px-4">{item.name}</td>
-              <td className="py-2 px-4">{item.category}</td>
-              <td className={`py-2 px-4 ${item.quantity <= item.lowStock ? "text-red-600 font-bold" : ""}`}>
-                {item.quantity}
-              </td>
-              <td className="py-2 px-4">{item.supplier}</td>
-              <td className="py-2 px-4">{item.expiry}</td>
-              <td className="py-2 px-4">
-                <Link to={`/edit/${item.id}`} className="text-blue-600 hover:underline mr-2">Edit</Link>
+            <tr key={item.id} className={item.quantity < 20 ? "bg-red-100" : ""}>
+              <td className="border px-2 py-1">{item.id}</td>
+              <td className="border px-2 py-1">{item.name}</td>
+              <td className="border px-2 py-1">{item.category}</td>
+              <td className="border px-2 py-1">{item.supplier}</td>
+              <td className="border px-2 py-1">{item.quantity}</td>
+              <td className="border px-2 py-1">{item.expiry}</td>
+              <td className="border px-2 py-1">
+                <button
+                  className="bg-green-500 text-white px-2 py-1 rounded"
+                  onClick={() => onEdit(item.id)}
+                >
+                  Edit
+                </button>
               </td>
             </tr>
           ))}
@@ -41,6 +40,6 @@ function Inventory({ inventory }) {
       </table>
     </div>
   );
-}
+};
 
 export default Inventory;

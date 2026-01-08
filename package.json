@@ -1,24 +1,37 @@
 {
   "name": "smart-inventory-tracker",
   "version": "1.0.0",
-  "description": "Smart Warehouse Inventory Tracker - React + Tailwind + Vite",
-  "author": "Ianm16-pillows",
-  "private": true,
+  "description": "A Smart Warehouse Inventory Tracker for lab supplies with React, Vite, and TailwindCSS",
+  "main": "src/main.jsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx"
   },
+  "keywords": [
+    "inventory",
+    "lab",
+    "react",
+    "vite",
+    "tailwind",
+    "CRUD"
+  ],
+  "author": "Ian Mwambuki",
+  "license": "MIT",
   "dependencies": {
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.18.1",
+    "zustand": "^4.3.6"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-react": "^4.1.0",
     "autoprefixer": "^10.4.15",
-    "postcss": "^8.4.26",
-    "tailwindcss": "^3.3.3",
-    "vite": "^5.0.0"
+    "eslint": "^8.49.0",
+    "eslint-plugin-react": "^7.33.2",
+    "postcss": "^8.4.34",
+    "tailwindcss": "^3.3.2",
+    "vite": "^5.1.4"
   }
 }

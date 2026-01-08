@@ -1,67 +1,86 @@
 import React from "react";
 
-const exampleItems = [
-  { id: 1, name: "Sulphuric Acid", quantity: 10, expiryDate: "2026-02-15" },
-  { id: 2, name: "HCL", quantity: 15, expiryDate: "2026-05-01" },
-  { id: 3, name: "Isopropanol", quantity: 50, expiryDate: "2027-01-01" },
-  { id: 4, name: "Ethanal", quantity: 20, expiryDate: "2026-04-15" },
-  { id: 5, name: "Methanol", quantity: 5, expiryDate: "2026-03-20" },
-  { id: 6, name: "TB Lab Test Kit", quantity: 25, expiryDate: "2026-08-01" },
-  { id: 7, name: "H. Pylori Test Kit", quantity: 30, expiryDate: "2026-12-01" },
-  { id: 8, name: "Syphilis Test Kit", quantity: 12, expiryDate: "2026-06-15" },
-  { id: 9, name: "HBsAg Test Kit", quantity: 18, expiryDate: "2026-07-01" },
-  { id: 10, name: "Malaria Test Kit", quantity: 50, expiryDate: "2026-09-01" },
-  { id: 11, name: "COVID Test Kit", quantity: 40, expiryDate: "2026-05-20" },
-  { id: 12, name: "Measles Test Kit", quantity: 22, expiryDate: "2026-10-15" },
-];
+function Alerts({ inventory }) {
+  // Low stock threshold
+  const LOW_STOCK_THRESHOLD = 5;
 
-const LOW_STOCK_THRESHOLD = 20;
-const EXPIRY_WARNING_DAYS = 90;
-
-function Alerts() {
+  // Items expiring soon (within 30 days)
   const today = new Date();
+  const EXPIRY_ALERT_DAYS = 30;
 
-  const lowStock = exampleItems.filter((item) => item.quantity <= LOW_STOCK_THRESHOLD);
+  const lowStockItems = inventory.filter(
+    (item) => parseInt(item.quantity) <= LOW_STOCK_THRESHOLD
+  );
 
-  const expiringSoon = exampleItems.filter((item) => {
-    const expiry = new Date(item.expiryDate);
-    const diffDays = (expiry - today) / (1000 * 60 * 60 * 24);
-    return diffDays <= EXPIRY_WARNING_DAYS;
+  const expiringItems = inventory.filter((item) => {
+    if (!item.expiry) return false;
+    const expiryDate = new Date(item.expiry);
+    const diffTime = expiryDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= EXPIRY_ALERT_DAYS && diffDays >= 0;
   });
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Alerts</h2>
+    <div className="max-w-4xl mx-auto space-y-8">
+      <h2 className="text-2xl font-bold mb-4 text-blue-700">Alerts Dashboard</h2>
 
-      {lowStock.length > 0 && (
-        <div className="mb-4">
-          <h3 className="font-semibold mb-2">Low Stock</h3>
-          <ul className="space-y-1">
-            {lowStock.map((item) => (
-              <li key={item.id} className="p-2 border rounded bg-red-100">
-                {item.name} — Quantity: {item.quantity}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Low Stock */}
+      <div className="bg-white p-6 rounded shadow">
+        <h3 className="text-xl font-semibold text-green-600 mb-3">Low Stock Items</h3>
+        {lowStockItems.length === 0 ? (
+          <p className="text-gray-500">No items are below the low stock threshold.</p>
+        ) : (
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-green-100">
+                <th className="border p-2">Name</th>
+                <th className="border p-2">Category</th>
+                <th className="border p-2">Quantity</th>
+                <th className="border p-2">Supplier</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lowStockItems.map((item) => (
+                <tr key={item.id} className="hover:bg-green-50">
+                  <td className="border p-2">{item.name}</td>
+                  <td className="border p-2">{item.category}</td>
+                  <td className="border p-2 text-red-600 font-bold">{item.quantity}</td>
+                  <td className="border p-2">{item.supplier}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
-      {expiringSoon.length > 0 && (
-        <div>
-          <h3 className="font-semibold mb-2">Expiring Soon</h3>
-          <ul className="space-y-1">
-            {expiringSoon.map((item) => (
-              <li key={item.id} className="p-2 border rounded bg-yellow-100">
-                {item.name} — Expiry: {item.expiryDate}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {lowStock.length === 0 && expiringSoon.length === 0 && (
-        <div className="p-2 border rounded bg-green-100">No alerts</div>
-      )}
+      {/* Expiring Soon */}
+      <div className="bg-white p-6 rounded shadow">
+        <h3 className="text-xl font-semibold text-blue-600 mb-3">Expiring Items (Next 30 Days)</h3>
+        {expiringItems.length === 0 ? (
+          <p className="text-gray-500">No items are expiring soon.</p>
+        ) : (
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-blue-100">
+                <th className="border p-2">Name</th>
+                <th className="border p-2">Category</th>
+                <th className="border p-2">Expiry Date</th>
+                <th className="border p-2">Supplier</th>
+              </tr>
+            </thead>
+            <tbody>
+              {expiringItems.map((item) => (
+                <tr key={item.id} className="hover:bg-blue-50">
+                  <td className="border p-2">{item.name}</td>
+                  <td className="border p-2">{item.category}</td>
+                  <td className="border p-2 text-red-600 font-bold">{item.expiry}</td>
+                  <td className="border p-2">{item.supplier}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

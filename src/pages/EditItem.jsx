@@ -1,101 +1,97 @@
 import React, { useState, useEffect } from "react";
+import { inventory } from "../data/inventoryData";
 
-const EditItem = ({ item, onSave, onCancel }) => {
-  const [formData, setFormData] = useState({
+const EditItem = ({ itemId, onSave }) => {
+  const [item, setItem] = useState(null);
+  const [form, setForm] = useState({
     name: "",
     category: "",
+    supplier: "",
     quantity: 0,
-    lot: "",
     expiry: "",
-    location: "",
   });
 
   useEffect(() => {
-    if (item) setFormData(item);
-  }, [item]);
+    const existing = inventory.find((i) => i.id === itemId);
+    if (existing) {
+      setItem(existing);
+      setForm(existing);
+    }
+  }, [itemId]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+    if (onSave) onSave({ ...form, id: item.id });
+    alert("Item updated!");
   };
 
+  if (!item) return <div>Item not found</div>;
+
   return (
-    <div className="p-4 bg-white rounded shadow-md max-w-md mx-auto mt-6">
-      <h2 className="text-xl font-bold mb-4 text-primaryBlue">Edit Item</h2>
+    <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded-md">
+      <h2 className="text-xl font-bold mb-4">Edit Item: {item.name}</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          name="name"
-          placeholder="Item Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="text"
-          name="lot"
-          placeholder="Lot / Batch Number"
-          value={formData.lot}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="date"
-          name="expiry"
-          value={formData.expiry}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <div className="flex justify-between">
-          <button
-            type="submit"
-            className="bg-primaryGreen text-white px-4 py-2 rounded"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            className="bg-gray-300 px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
         </div>
+        <div>
+          <label>Category</label>
+          <input
+            type="text"
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+        <div>
+          <label>Supplier</label>
+          <input
+            type="text"
+            name="supplier"
+            value={form.supplier}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+        <div>
+          <label>Quantity</label>
+          <input
+            type="number"
+            name="quantity"
+            value={form.quantity}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+        <div>
+          <label>Expiry</label>
+          <input
+            type="date"
+            name="expiry"
+            value={form.expiry}
+            onChange={handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+          Save Changes
+        </button>
       </form>
     </div>
   );
 };
 
 export default EditItem;
+

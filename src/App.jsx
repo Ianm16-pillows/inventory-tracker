@@ -7,18 +7,15 @@ import Alerts from "./pages/Alerts";
 function App() {
   const [editingItemId, setEditingItemId] = useState(null);
 
-  const handleEdit = (id) => {
-    setEditingItemId(id);
-  };
-
+  const handleEdit = (id) => setEditingItemId(id);
   const handleSave = (updatedItem) => {
-    // Update inventory logic here (or just alert for demo)
     alert(`Saved: ${updatedItem.name}`);
     setEditingItemId(null);
   };
 
   return (
     <div className="min-h-screen bg-blue-50 p-4">
+      <h1 className="text-3xl font-bold text-green-600 mb-4">Smart Inventory Tracker</h1>
       {editingItemId ? (
         <EditItem itemId={editingItemId} onSave={handleSave} />
       ) : (

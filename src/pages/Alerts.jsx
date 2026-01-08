@@ -1,41 +1,24 @@
 import React from "react";
+import { inventory } from "../data/inventoryData";
 
-function Alerts({ inventory }) {
-  const today = new Date();
-  const lowStockItems = inventory.filter(item => item.quantity <= item.lowStock);
-  const expiringItems = inventory.filter(item => new Date(item.expiry) <= new Date(today.setDate(today.getDate() + 30)));
-
+const Alerts = () => {
+  const lowStock = inventory.filter((i) => i.quantity < 20);
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Alerts</h2>
-
-      <div className="mb-6">
-        <h3 className="font-semibold text-red-600 mb-2">Low Stock Items</h3>
-        {lowStockItems.length === 0 ? (
-          <p>All items sufficiently stocked.</p>
-        ) : (
-          <ul className="list-disc list-inside">
-            {lowStockItems.map(item => (
-              <li key={item.id}>{item.name} ({item.quantity} left)</li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      <div>
-        <h3 className="font-semibold text-orange-600 mb-2">Expiring Soon (30 days)</h3>
-        {expiringItems.length === 0 ? (
-          <p>No items expiring soon.</p>
-        ) : (
-          <ul className="list-disc list-inside">
-            {expiringItems.map(item => (
-              <li key={item.id}>{item.name} (Expiry: {item.expiry})</li>
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className="p-4 bg-yellow-50 shadow-md rounded-md mt-4">
+      <h2 className="text-xl font-bold mb-2">Low Stock Alerts</h2>
+      {lowStock.length === 0 ? (
+        <div>All items are sufficiently stocked.</div>
+      ) : (
+        <ul className="list-disc pl-5">
+          {lowStock.map((i) => (
+            <li key={i.id}>
+              {i.name} ({i.quantity}) - supplier: {i.supplier}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-}
+};
 
 export default Alerts;

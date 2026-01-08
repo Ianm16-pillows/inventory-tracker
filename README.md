@@ -1,42 +1,49 @@
-# Smart Warehouse Inventory Tracker
+# Smart Inventory Tracker
 
-A React-based inventory management system designed for laboratory and warehouse environments, focusing on Rapid Test company operations.
-
-This project is part of a Front-End Capstone demonstrating practical application of **React**, **state management**, **routing**, **Tailwind CSS**, and **CRUD operations** with LocalStorage.
+A **Smart Warehouse Inventory Tracker** built with **React**, **Vite**, and **TailwindCSS**. Designed for lab operations to manage biomedical supplies efficiently.  
 
 ---
 
-## 🚀 Live Demo
+## Features
 
- Local:   http://localhost:5173/
-
-
----
-
-## 📌 Features
-
-- **Add, Edit, Delete Inventory Items**  
-- Track item **categories, quantities, and expiry dates**
-- **Search inventory items** by name
-- **View alerts** for items expiring within 30 days
-- **LocalStorage** for persistent data (no backend needed)
-- **Responsive UI** built with Tailwind CSS
-- Routing between pages using React Router
+- Add, edit, and delete inventory items
+- Track quantity, lot/batch, expiry, and location
+- Low-stock & expiry alerts
+- Import/export CSV for audits
+- Dashboard overview
+- Filter inventory by category (e.g., Chemicals, Diagnostics, Consumables)
+- Responsive design for desktop and mobile
+- Blue-green Tailwind theme for clean UI
 
 ---
 
-## 🧱 Tech Stack
+## Pre-loaded Sample Data
 
-- React 18  
-- React Router DOM 6  
-- Tailwind CSS 3  
-- Vite 4  
-- JavaScript (ES6+)  
-- LocalStorage (Web Storage API)
+**Chemicals:**
+- Sulphuric Acid
+- HCl
+- Isopropanol
+- Ethanal
+- Methanol
+
+**Test Kits:**
+- TB LAP
+- H. pylori test kits
+- Syphilis
+- HBsAg
+- Malaria
+- COVID-19
+- Measles
+
+**Diagnostics (Cypress / Qiagen / Abbort / Haemocue):**
+- CYANElite 290
+- QuantiFERON-TB Gold Plus Kits
+- Afinion ACR Test
+- Alinity I / H / M systems
+- HemoCue Hb 201 DM system
+- Antisera panels (Salmonella, Brucella, Proteus, etc.)
 
 ---
 
-## 📂 Project Structure
-
-
+## Project Structure
 

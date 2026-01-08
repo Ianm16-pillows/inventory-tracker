@@ -1,70 +1,112 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-// Example lab items
-const exampleItems = [
-  // Chemicals
-  { id: 1, name: "Sulphuric Acid", category: "Chemicals", quantity: 10, expiryDate: "2026-02-15" },
-  { id: 2, name: "HCL", category: "Chemicals", quantity: 15, expiryDate: "2026-05-01" },
-  { id: 3, name: "Isopropanol", category: "Chemicals", quantity: 50, expiryDate: "2027-01-01" },
-  { id: 4, name: "Ethanal", category: "Chemicals", quantity: 20, expiryDate: "2026-04-15" },
-  { id: 5, name: "Methanol", category: "Chemicals", quantity: 5, expiryDate: "2026-03-20" },
+function Inventory({ inventory, deleteItem }) {
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
 
-  // Rapid Test Kits
-  { id: 6, name: "TB Lab Test Kit", category: "Rapid Test", quantity: 25, expiryDate: "2026-08-01" },
-  { id: 7, name: "H. Pylori Test Kit", category: "Rapid Test", quantity: 30, expiryDate: "2026-12-01" },
-  { id: 8, name: "Syphilis Test Kit", category: "Rapid Test", quantity: 12, expiryDate: "2026-06-15" },
-  { id: 9, name: "HBsAg Test Kit", category: "Rapid Test", quantity: 18, expiryDate: "2026-07-01" },
-  { id: 10, name: "Malaria Test Kit", category: "Rapid Test", quantity: 50, expiryDate: "2026-09-01" },
-  { id: 11, name: "COVID Test Kit", category: "Rapid Test", quantity: 40, expiryDate: "2026-05-20" },
-  { id: 12, name: "Measles Test Kit", category: "Rapid Test", quantity: 22, expiryDate: "2026-10-15" },
-];
+  // Get unique categories for filter dropdown
+  const categories = [...new Set(inventory.map((item) => item.category))];
 
-function Inventory() {
-  const [items, setItems] = useState(exampleItems);
-
-  const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
+  // Filtered inventory
+  const filteredInventory = inventory.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.supplier.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      categoryFilter === "" || item.category === categoryFilter;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Inventory</h1>
-      <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-2 py-1">Name</th>
-            <th className="border px-2 py-1">Category</th>
-            <th className="border px-2 py-1">Quantity</th>
-            <th className="border px-2 py-1">Expiry</th>
-            <th className="border px-2 py-1">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id}>
-              <td className="border px-2 py-1">{item.name}</td>
-              <td className="border px-2 py-1">{item.category}</td>
-              <td className="border px-2 py-1">{item.quantity}</td>
-              <td className="border px-2 py-1">{item.expiryDate}</td>
-              <td className="border px-2 py-1 space-x-2">
-                <Link
-                  to={`/edit/${item.id}`}
-                  className="bg-yellow-500 text-white px-2 py-1 rounded"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => deleteItem(item.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+    <div className="max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold text-blue-700 mb-4">Inventory</h2>
+
+      {/* Filters */}
+      <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Search by name or supplier"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="p-2 border rounded flex-1"
+        />
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="p-2 border rounded"
+        >
+          <option value="">All Categories</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+      </div>
+
+      {/* Inventory Table */}
+      <div className="overflow-x-auto bg-white rounded shadow">
+        <table className="w-full border-collapse">
+          <thead className="bg-blue-100">
+            <tr>
+              <th className="border p-2">Name</th>
+              <th className="border p-2">Category</th>
+              <th className="border p-2">Quantity</th>
+              <th className="border p-2">Supplier</th>
+              <th className="border p-2">Expiry</th>
+              <th className="border p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredInventory.map((item) => (
+              <tr key={item.id} className="hover:bg-blue-50">
+                <td className="border p-2">{item.name}</td>
+                <td className="border p-2">{item.category}</td>
+                <td
+                  className={`border p-2 font-bold ${
+                    parseInt(item.quantity) <= 5 ? "text-red-600" : ""
+                  }`}
+                >
+                  {item.quantity}
+                </td>
+                <td className="border p-2">{item.supplier}</td>
+                <td
+                  className={`border p-2 font-bold ${
+                    item.expiry &&
+                    new Date(item.expiry) - new Date() <= 30 * 24 * 60 * 60 * 1000
+                      ? "text-red-600"
+                      : ""
+                  }`}
+                >
+                  {item.expiry || "-"}
+                </td>
+                <td className="border p-2 space-x-2">
+                  <Link
+                    to={`/edit/${item.id}`}
+                    className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => deleteItem(item.id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {filteredInventory.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center p-4 text-gray-500">
+                  No items found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

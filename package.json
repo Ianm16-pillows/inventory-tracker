@@ -1,7 +1,7 @@
 {
-  "name": "inventory-tracker",
-  "version": "1.0.0",
+  "name": "smart-inventory-tracker",
   "private": true,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,14 +11,14 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.0",
-    "autoprefixer": "^10.4.15",
+    "vite": "^5.0.8",
+    "tailwindcss": "^3.4.1",
     "postcss": "^8.4.35",
-    "tailwindcss": "^3.3.3",
-    "vite": "^4.4.0"
+    "autoprefixer": "^10.4.17"
   }
 }
+
 

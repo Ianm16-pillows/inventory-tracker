@@ -1,24 +1,72 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
 import Inventory from "./pages/Inventory";
 import AddItem from "./pages/AddItem";
 import EditItem from "./pages/EditItem";
 import Alerts from "./pages/Alerts";
+import { inventory as initialData } from "./data/inventoryData";
 
-export default function App() {
+function App() {
+  const [inventory, setInventory] = useState(initialData);
+
+  // Add item
+  const addItem = (item) => {
+    setInventory([...inventory, { ...item, id: Date.now() }]);
+  };
+
+  // Update item
+  const updateItem = (updatedItem) => {
+    setInventory(
+      inventory.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
+
+  // Delete item
+  const deleteItem = (id) => {
+    setInventory(inventory.filter((item) => item.id !== id));
+  };
+
   return (
-    <BrowserRouter>
-      <nav className="bg-primary text-white p-4 flex gap-6">
-        <NavLink to="/">Inventory</NavLink>
-        <NavLink to="/add">Add Item</NavLink>
-        <NavLink to="/alerts">Alerts</NavLink>
-      </nav>
+    <Router>
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-green-50">
+        <nav className="bg-blue-600 text-white p-4 flex justify-between">
+          <h1 className="font-bold text-xl">Smart Inventory Tracker</h1>
+          <div className="space-x-4">
+            <Link to="/" className="hover:underline">Inventory</Link>
+            <Link to="/add" className="hover:underline">Add Item</Link>
+            <Link to="/alerts" className="hover:underline">Alerts</Link>
+          </div>
+        </nav>
 
-      <Routes>
-        <Route path="/" element={<Inventory />} />
-        <Route path="/add" element={<AddItem />} />
-        <Route path="/edit/:id" element={<EditItem />} />
-        <Route path="/alerts" element={<Alerts />} />
-      </Routes>
-    </BrowserRouter>
+        <main className="p-6">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Inventory
+                  inventory={inventory}
+                  deleteItem={deleteItem}
+                />
+              }
+            />
+            <Route
+              path="/add"
+              element={<AddItem addItem={addItem} />}
+            />
+            <Route
+              path="/edit/:id"
+              element={<EditItem inventory={inventory} updateItem={updateItem} />}
+            />
+            <Route
+              path="/alerts"
+              element={<Alerts inventory={inventory} />}
+            />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
+
+export default App;

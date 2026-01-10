@@ -1,49 +1,46 @@
-# Smart Inventory Tracker
+# Inventory Tracker
 
-A **Smart Warehouse Inventory Tracker** built with **React**, **Vite**, and **TailwindCSS**. Designed for lab operations to manage biomedical supplies efficiently.  
+**Smart Warehouse Inventory Tracker** – a lightweight React + Vite + TailwindCSS application to manage laboratory chemicals, diagnostic test kits, and other inventory items efficiently.  
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Technologies](#technologies)
+- [Getting Started](#getting-started)
+- [Folder Structure](#folder-structure)
+- [Sample Data](#sample-data)
+- [Future Improvements](#future-improvements)
 
 ---
 
 ## Features
 
-- Add, edit, and delete inventory items
-- Track quantity, lot/batch, expiry, and location
-- Low-stock & expiry alerts
-- Import/export CSV for audits
-- Dashboard overview
-- Filter inventory by category (e.g., Chemicals, Diagnostics, Consumables)
-- Responsive design for desktop and mobile
-- Blue-green Tailwind theme for clean UI
+- Display a full inventory list with categories, quantity, unit, expiry, location, and supplier.
+- Add new items (form placeholders included).
+- Edit existing items (form placeholders included).
+- Alerts for low-stock or expired items (placeholder page).
+- Styled with **Tailwind CSS** using a blue & green theme.
+- Router-based navigation between pages.
 
 ---
 
-## Pre-loaded Sample Data
+## Technologies
 
-**Chemicals:**
-- Sulphuric Acid
-- HCl
-- Isopropanol
-- Ethanal
-- Methanol
-
-**Test Kits:**
-- TB LAP
-- H. pylori test kits
-- Syphilis
-- HBsAg
-- Malaria
-- COVID-19
-- Measles
-
-**Diagnostics (Cypress / Qiagen / Abbort / Haemocue):**
-- CYANElite 290
-- QuantiFERON-TB Gold Plus Kits
-- Afinion ACR Test
-- Alinity I / H / M systems
-- HemoCue Hb 201 DM system
-- Antisera panels (Salmonella, Brucella, Proteus, etc.)
+- **React 18**
+- **Vite** – for fast development server
+- **TailwindCSS** – for styling
+- **React Router v6** – for navigation
 
 ---
 
-## Project Structure
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Ianm16-pillows/inventory-tracker.git
+cd inventory-tracker
+
 

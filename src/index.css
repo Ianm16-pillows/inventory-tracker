@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: custom body background */
 body {
-  @apply bg-lightBlue;
+  font-family: system-ui, sans-serif;
 }
-

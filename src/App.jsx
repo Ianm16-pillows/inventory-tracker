@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Inventory from "./pages/Inventory";
 import AddItem from "./pages/AddItem";
 import EditItem from "./pages/EditItem";
 import Alerts from "./pages/Alerts";
-import Navbar from "./components/Navbar";
 
 export default function App() {
   return (

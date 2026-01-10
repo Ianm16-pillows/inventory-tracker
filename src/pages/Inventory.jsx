@@ -1,45 +1,33 @@
-import React from "react";
-import { inventory } from "../data/inventoryData";
+import { Link } from "react-router-dom";
 
-const Inventory = ({ onEdit }) => {
+const items = [
+  { id: 1, name: "Sulphuric Acid", category: "Chemicals", qty: 20 },
+  { id: 2, name: "CRP Test Kit", category: "Diagnostics", qty: 8 },
+  { id: 3, name: "Urine 10 Parameters", category: "Urine Panels", qty: 15 }
+];
+
+export default function Inventory() {
   return (
-    <div className="p-4 bg-white shadow-md rounded-md mt-4">
-      <h2 className="text-xl font-bold mb-4">Inventory</h2>
-      <table className="w-full border border-gray-200">
-        <thead className="bg-blue-100">
-          <tr>
-            <th className="border px-2 py-1">ID</th>
-            <th className="border px-2 py-1">Name</th>
-            <th className="border px-2 py-1">Category</th>
-            <th className="border px-2 py-1">Supplier</th>
-            <th className="border px-2 py-1">Quantity</th>
-            <th className="border px-2 py-1">Expiry</th>
-            <th className="border px-2 py-1">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {inventory.map((item) => (
-            <tr key={item.id} className={item.quantity < 20 ? "bg-red-100" : ""}>
-              <td className="border px-2 py-1">{item.id}</td>
-              <td className="border px-2 py-1">{item.name}</td>
-              <td className="border px-2 py-1">{item.category}</td>
-              <td className="border px-2 py-1">{item.supplier}</td>
-              <td className="border px-2 py-1">{item.quantity}</td>
-              <td className="border px-2 py-1">{item.expiry}</td>
-              <td className="border px-2 py-1">
-                <button
-                  className="bg-green-500 text-white px-2 py-1 rounded"
-                  onClick={() => onEdit(item.id)}
-                >
-                  Edit
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold text-primary mb-4">Inventory</h1>
+      <ul className="space-y-3">
+        {items.map(item => (
+          <li
+            key={item.id}
+            className="bg-white p-4 rounded shadow flex justify-between"
+          >
+            <span>
+              {item.name} — {item.category} (Qty: {item.qty})
+            </span>
+            <Link
+              to={`/edit/${item.id}`}
+              className="text-secondary font-semibold"
+            >
+              Edit
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default Inventory;
+}

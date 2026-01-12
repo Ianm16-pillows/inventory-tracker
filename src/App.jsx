@@ -1,27 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Inventory from './pages/Inventory.jsx';
-import AddItem from './pages/AddItem.jsx';
-import EditItem from './pages/EditItem.jsx';
-import Alerts from './pages/Alerts.jsx';
+import { useState } from "react";
+import { initialItems } from "./data";
+import Inventory from "./Inventory";
+import AddItem from "./AddItem";
+import EditItem from "./EditItem";
 
 export default function App() {
+  const [items, setItems] = useState(initialItems);
+  const [editingItem, setEditingItem] = useState(null);
+
+  const addItem = (item) => {
+    setItems([...items, { ...item, id: Date.now() }]);
+  };
+
+  const updateItem = (updated) => {
+    setItems(items.map((i) => (i.id === updated.id ? updated : i)));
+    setEditingItem(null);
+  };
+
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <nav className="bg-primary text-white p-4 flex gap-4">
-          <Link to="/">Inventory</Link>
-          <Link to="/add">Add Item</Link>
-          <Link to="/alerts">Alerts</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Inventory />} />
-          <Route path="/add" element={<AddItem />} />
-          <Route path="/edit" element={<EditItem />} />
-          <Route path="/alerts" element={<Alerts />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="container">
+      <h1>🧪 Smart Lab Inventory Tracker</h1>
+
+      {editingItem ? (
+        <EditItem item={editingItem} onUpdate={updateItem} />
+      ) : (
+        <AddItem onAdd={addItem} />
+      )}
+
+      <Inventory items={items} onEdit={setEditingItem} />
+    </div>
   );
 }
-

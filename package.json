@@ -1,7 +1,7 @@
 {
-  "name": "inventory-tracker",
-  "version": "1.0.0",
+  "name": "inventory-simple",
   "private": true,
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,14 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "react-router-dom": "^6.17.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "vite": "^4.4.0",
-    "tailwindcss": "^3.3.3",
-    "autoprefixer": "^10.5.0",
-    "@tailwindcss/postcss": "^2.0.0"
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.0"
   }
 }

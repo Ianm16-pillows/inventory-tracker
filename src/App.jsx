@@ -1,33 +1,22 @@
 import { useState } from "react";
-import { initialItems } from "./data";
-import Inventory from "./Inventory";
-import AddItem from "./AddItem";
-import EditItem from "./EditItem";
+import Dashboard from "./pages/Dashboard";
+import Inventory from "./pages/Inventory";
+import Alerts from "./pages/Alerts";
+import CsvImport from "./pages/CsvImport";
+import Navbar from "./components/Navbar";
 
 export default function App() {
-  const [items, setItems] = useState(initialItems);
-  const [editingItem, setEditingItem] = useState(null);
-
-  const addItem = (item) => {
-    setItems([...items, { ...item, id: Date.now() }]);
-  };
-
-  const updateItem = (updated) => {
-    setItems(items.map((i) => (i.id === updated.id ? updated : i)));
-    setEditingItem(null);
-  };
+  const [page, setPage] = useState("dashboard");
 
   return (
-    <div className="container">
-      <h1>🧪 Smart Lab Inventory Tracker</h1>
-
-      {editingItem ? (
-        <EditItem item={editingItem} onUpdate={updateItem} />
-      ) : (
-        <AddItem onAdd={addItem} />
-      )}
-
-      <Inventory items={items} onEdit={setEditingItem} />
-    </div>
+    <>
+      <Navbar setPage={setPage} />
+      <div className="container">
+        {page === "dashboard" && <Dashboard />}
+        {page === "inventory" && <Inventory />}
+        {page === "alerts" && <Alerts />}
+        {page === "csv" && <CsvImport />}
+      </div>
+    </>
   );
 }

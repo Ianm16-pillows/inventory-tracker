@@ -1,8 +1,55 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Custom background & font */
 body {
-  @apply bg-blue-50 font-sans;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f9f9;
+  color: #1f2933;
+}
+
+.nav {
+  background: #0f766e;
+  padding: 12px;
+  color: white;
+  display: flex;
+  gap: 20px;
+}
+
+.nav button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.alert {
+  color: #b91c1c;
+  font-weight: bold;
 }
